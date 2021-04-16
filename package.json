@@ -1,0 +1,17 @@
+{
+	"name": "test-img-cut",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Breathe",
+	"license": "ISC",
+	"dependencies": {},
+	"devDependencies": {
+		"images": "^3.2.3",
+		"sharp": "^0.28.1"
+	}
+}
