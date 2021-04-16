@@ -29,7 +29,7 @@ const savePngFile = (file, filePath) => {
 	let newPath = filePath.replace(config.filePath, config.dist)
 	console.log('--------->生成新图片', width, height, newPath)
 	try {
-		sharp(filePath).extract({ left: 0, top: 0, width, height }).toFile(newPath)
+		sharp(filePath).extract({ left: 0, top: 0, width, height }).toFile(newPath) // 生成新图片
 	} catch (e) {
 		//TODO handle the exception
 		console.log('--------->新图片写入失败', e)
@@ -37,7 +37,7 @@ const savePngFile = (file, filePath) => {
 }
 
 // 清空文件夹
-let delDir = (path) => {
+let delDir = async (path) => {
 	let files = []
 	if (fs.existsSync(path)) {
 		files = fs.readdirSync(path)
@@ -45,7 +45,7 @@ let delDir = (path) => {
 			let curPath = path + '/' + file
 			// console.log('--------->curPath', curPath)
 			if (fs.statSync(curPath).isDirectory()) {
-				delDir(curPath) //递归删除文件夹
+				await delDir(curPath) //递归删除文件夹
 			} else {
 				fs.unlinkSync(curPath) //删除文件
 			}
@@ -60,7 +60,7 @@ let analysisDirectory = async (path, isfirst = false) => {
 	// 首次执行需要清楚上一次所记录的surplusImage
 	if (isfirst) {
 		fs.writeFileSync(config.surplusImage, '')
-		delDir(config.dist) // 清空dist
+		await delDir(config.dist) // 清空dist
 		fs.mkdirSync(config.dist, '0755') //创建当前文件夹
 		// return
 	}
